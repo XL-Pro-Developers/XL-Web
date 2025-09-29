@@ -1,0 +1,133 @@
+/* Theme tokens (colors, fonts) + utilities; limited to 5 colors total; respects prefers-reduced-motion */
+:root {
+  /* Neutrals */
+  --c-bg: #0b0e11; /* background */
+  --c-fg: #d1d5db; /* foreground/body text */
+
+  /* Brand + accents (max 3) */
+  --c-primary: #00d1ff; /* Electric Blue: primary CTA, glow */
+  --c-accent: #7a5af8; /* Vibrant Purple: secondary accents (use sparingly) */
+  --c-pink: #ff3ea5; /* Hot Pink: minimal highlight only */
+
+  /* Radii */
+  --radius: 1rem; /* 16px ~ 2xl */
+
+  /* Shadows / glows */
+  --glow-primary: 0 0 24px rgba(0, 209, 255, 0.35);
+  --glow-accent: 0 0 20px rgba(122, 90, 248, 0.35);
+}
+
+/* Map to Tailwind tokens from globals.css via CSS variables */
+.dark {
+  --background: var(--c-bg);
+  --foreground: var(--c-fg);
+  --card: color-mix(in oklab, var(--c-bg) 94%, black 6%);
+  --card-foreground: var(--c-fg);
+  --popover: var(--c-bg);
+  --popover-foreground: var(--c-fg);
+  --primary: var(--c-primary);
+  --primary-foreground: #001217;
+  --secondary: color-mix(in oklab, var(--c-bg) 85%, white 15%);
+  --secondary-foreground: var(--c-fg);
+  --muted: color-mix(in oklab, var(--c-bg) 88%, white 12%);
+  --muted-foreground: #9ca3af;
+  --accent: var(--c-accent);
+  --accent-foreground: #0a0712;
+  --border: color-mix(in oklab, var(--c-bg) 75%, white 25%);
+  --input: color-mix(in oklab, var(--c-bg) 75%, white 25%);
+  --ring: var(--c-primary);
+  --chart-1: var(--c-primary);
+  --chart-2: var(--c-accent);
+  --chart-3: var(--c-pink);
+  --chart-4: #22c55e;
+  --chart-5: #f59e0b;
+}
+
+/* Typography utilities */
+.font-display {
+  font-family: var(--font-space-grotesk), ui-sans-serif, system-ui;
+}
+.font-body {
+  font-family: var(--font-inter), ui-sans-serif, system-ui;
+}
+
+/* Surfaces */
+.glass {
+  background: color-mix(in oklab, var(--c-bg) 70%, white 30% / 6%);
+  border: 1px solid color-mix(in oklab, var(--c-bg) 40%, white 60% / 12%);
+  backdrop-filter: blur(10px);
+}
+
+/* Glow helpers */
+.glow-primary {
+  box-shadow: var(--glow-primary);
+}
+.glow-accent {
+  box-shadow: var(--glow-accent);
+}
+
+/* Hero background: subtle animated gradient grid, reduced for prefers-reduced-motion */
+.hero-bg {
+  position: relative;
+  isolation: isolate;
+  background: radial-gradient(1200px 600px at 10% -10%, rgba(0, 209, 255, 0.12), transparent),
+    radial-gradient(1000px 600px at 100% 0%, rgba(122, 90, 248, 0.1), transparent),
+    radial-gradient(800px 500px at 50% 110%, rgba(255, 62, 165, 0.08), transparent), var(--c-bg);
+}
+
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  background-image: linear-gradient(to right, transparent 49%, rgba(255, 255, 255, 0.06) 50%, transparent 51%),
+    linear-gradient(to bottom, transparent 49%, rgba(255, 255, 255, 0.06) 50%, transparent 51%);
+  background-size: 40px 40px;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  animation: gridPulse 6s ease-in-out infinite;
+}
+
+@keyframes gridPulse {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg::after {
+    animation: none;
+    opacity: 0.2;
+  }
+}
+
+/* Buttons */
+.btn-glow {
+  position: relative;
+  transition: transform 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
+}
+.btn-glow:hover {
+  transform: translateY(-1px);
+}
+.btn-primary {
+  background: var(--c-primary);
+  color: #001217;
+}
+.btn-outline {
+  border: 1px solid color-mix(in oklab, var(--c-primary) 55%, white 45% / 35%);
+  color: var(--c-fg);
+}
+
+/* Utilities */
+.shadow-border {
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--c-bg) 40%, white 60% / 10%);
+}
+.border-gradient {
+  border: 1px solid transparent;
+  background: linear-gradient(var(--c-bg), var(--c-bg)) padding-box,
+    linear-gradient(90deg, var(--c-primary), var(--c-accent), var(--c-pink)) border-box;
+}
