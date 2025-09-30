@@ -9,7 +9,7 @@ function InteractiveIcosahedron() {
   const { size, gl } = useThree()
   const [mouse, setMouse] = useState({ x: 0, y: 0 })
   const [spinSpeed, setSpinSpeed] = useState(0)
-  const spinDecay = 0.96 // Lower = stops faster, Higher = spins longer
+  const spinDecay = 0.99// Lower = stops faster, Higher = spins longer
 
   // Animate rotation and respond to mouse
   useFrame(() => {
@@ -32,7 +32,7 @@ function InteractiveIcosahedron() {
         x: (e.clientX / size.width - 0.5) * 2,
         y: -(e.clientY / size.height - 0.5) * 2,
       })
-      setSpinSpeed(0.07) // Increase for faster spin on move
+      setSpinSpeed(0.1) // Increase for faster spin on move
     }
     gl.domElement.addEventListener("pointermove", handlePointerMove)
     return () => gl.domElement.removeEventListener("pointermove", handlePointerMove)

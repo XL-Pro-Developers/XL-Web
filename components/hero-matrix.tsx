@@ -67,7 +67,7 @@ export function HeroMatrix({ className = "" }: { className?: string }) {
 
     if (!prefersReduced) {
       // Prime a darker base so trails look nice
-      ctx.fillStyle = "rgba(0, 0, 0, 1)"
+      ctx.fillStyle = "rgba(255, 10, 10, 1)"
       ctx.fillRect(0, 0, width, height)
       raf = requestAnimationFrame(draw)
     } else {
