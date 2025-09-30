@@ -24,9 +24,9 @@ export function Hero() {
               <GlowButton variant="outline">Meet Members</GlowButton>
             </Link>
           </div>
-          <p className="text-xs text-muted-foreground">
+          {/* <p className="text-xs text-muted-foreground">
             Tip: We respect reduced motion. Heavy animations are toned down automatically.
-          </p>
+          </p> */}
         </div>
         <div className="relative">
           <div className="absolute inset-0 -z-10 blur-3xl" aria-hidden>
@@ -36,11 +36,21 @@ export function Hero() {
             />
           </div>
           <div className="glass rounded-2xl p-6 border-gradient">
-            <div className="aspect-video w-full rounded-xl bg-gradient-to-br from-[var(--c-primary)]/20 via-[var(--c-accent)]/20 to-[var(--c-pink)]/20" />
+            
             <div className="mt-4 space-y-2">
-              <h3 className="font-display text-lg">Next Event: Dev Summit</h3>
+              {/* Animated event video */}
+              <video
+                src="https://uomobeznhbvlzengqqxl.supabase.co/storage/v1/object/public/website%20stuff/WhatsApp%20Video%202025-09-30%20at%2019.14.20_3485c314.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full rounded-lg mb-2 object-cover aspect-video animate-pulse" // You can replace animate-pulse with your own animation
+                poster="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80"
+              />
+              <h3 className="font-display text-lg">Codeathon 2.0</h3>
               <p className="text-sm text-muted-foreground">
-                Talks, workshops, and collaborative hacking. Limited seats.
+                Join us for a weekend of coding, collaboration, and fun! Open to all skill levels.
               </p>
             </div>
           </div>
