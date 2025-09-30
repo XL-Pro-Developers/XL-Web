@@ -1,5 +1,6 @@
 "use client"
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
@@ -17,18 +18,21 @@ export function SiteNav() {
 	const pathname = usePathname()
 	const [open, setOpen] = useState(false)
 	return (
-		<header className="sticky top-0 z-40 w-full border-b border-border bg-background/80 backdrop-blur">
-			<nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+		<header className="sticky top-0 z-40 w-fit mx-auto border-b border-border bg-background/80 backdrop-blur rounded-full shadow-lg shadow-primary/20">
+			<nav className="flex justify-center items-center py-2 px-4">
 				<Link
 					href="/"
 					className="flex items-center gap-2"
 					aria-label="XL Pro Developer Community Home"
 				>
-					<div
-						aria-hidden
-						className="h-6 w-6 rounded-md bg-[var(--c-primary)] glow-primary"
+					<Image
+						src="/xllogo.svg"
+						alt="XL Pro Logo"
+						width={100}
+						height={300}
+						className="glow-primary"
 					/>
-					<span className="font-bold text-xl">XL Pro</span>
+					<span className="font-bold text-lg"></span>
 				</Link>
 				{/* Hide nav links and menu button */}
 				{/* 

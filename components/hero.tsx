@@ -5,6 +5,8 @@ import { useState } from "react"
 import { GlowButton } from "./glow-button"
 import { RegisterModal } from "./register-modal"
 import Hero3D from "./hero-3d"
+import Prism from "./Prism"
+import Ballpit from "./Ballpit.jsx"
 
 const eventData = {
   title: "Codeathon 2.0",
@@ -17,10 +19,24 @@ export function Hero() {
   const [modalOpen, setModalOpen] = useState(false)
 
   return (
-    <section className="hero-bg relative overflow-hidden">
+    <section className="hero-bg relative overflow-hidden min-h-screen">
       {/* 3D animation as background */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <Prism />
+      </div>
       <Hero3D />
-      <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 gap-8 px-4 py-16 md:grid-cols-2 md:py-24">
+
+      {/* <div className="absolute inset-0 z-0 pointer-events-none">
+        <Ballpit
+          count={200}
+          gravity={0.7}
+          friction={0.8}
+          wallBounce={0.95}
+          followCursor={true}
+        />
+      </div> */}
+
+      <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 gap-8 px-4 pt-20 pb-16 md:grid-cols-2 md:pt-24 md:pb-24">
         <div className="flex flex-col justify-center gap-6">
           <h1 className="font-display text-pretty text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">
             Build. Learn. Ship.
