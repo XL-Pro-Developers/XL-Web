@@ -33,15 +33,15 @@ export function HeroMatrix({ className = "" }: { className?: string }) {
 
     // Matrix rain setup
     const characters =
-      "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズヅブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロゴゾドボポ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+      " アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズヅブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロゴゾドボポ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     const chars = characters.split("")
-    const fontSize = 14
+    const fontSize = 15
     let columns = Math.floor(width / fontSize)
     let drops = Array(columns).fill(1)
 
     // Colors via design tokens: primary neon for glyphs, subtle dark backdrop
     const glyphColor = getComputedStyle(document.documentElement).getPropertyValue("--c-accent") || "#00FFC2"
-    const fadeBg = "rgba(0,0,0,0.12)" // subtler trail and lower visibility
+    const fadeBg = "rgba(0, 0, 0, 0.73)" // subtler trail and lower visibility
 
     let raf = 0
     const draw = () => {
@@ -67,7 +67,7 @@ export function HeroMatrix({ className = "" }: { className?: string }) {
 
     if (!prefersReduced) {
       // Prime a darker base so trails look nice
-      ctx.fillStyle = "rgba(0,0,0,0.25)"
+      ctx.fillStyle = "rgba(0, 0, 0, 1)"
       ctx.fillRect(0, 0, width, height)
       raf = requestAnimationFrame(draw)
     } else {

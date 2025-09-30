@@ -4,6 +4,7 @@ import type React from "react"
 
 import { GlowButton } from "./glow-button"
 import type { EventData } from "./event-card"
+import { Input } from "./ui/input"
 
 type Member = { name: string; email: string }
 
@@ -39,87 +40,54 @@ export function RegisterModal({
   }, [open, onClose])
 
   useEffect(() => {
-    if (!open) {
-      setTeamName("")
-      setTeamSize(2)
-      setMembers([
-        { name: "", email: "" },
-        { name: "", email: "" },
-      ])
-      setTransactionId("")
-      setFile(null)
-      setError(null)
-      setOk(false)
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
     }
-  }, [open])
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   useEffect(() => {
-    // keep members array in sync with teamSize
-    if (teamSize < 2) setTeamSize(2)
-    if (teamSize > 4) setTeamSize(4)
     setMembers((prev) => {
-      const next = [...prev]
-      if (teamSize > next.length) {
-        while (next.length < teamSize) next.push({ name: "", email: "" })
-      } else if (teamSize < next.length) {
-        next.length = teamSize
+      if (teamSize > prev.length) {
+        // Add new empty members
+        return [...prev, ...Array(teamSize - prev.length).fill({ name: "", email: "" })];
+      } else if (teamSize < prev.length) {
+        // Remove extra members
+        return prev.slice(0, teamSize);
       }
-      return next
-    })
-  }, [teamSize])
+      return prev;
+    });
+  }, [teamSize]);
 
-  if (!open) return null
-
-  async function submit(e: React.FormEvent) {
-    e.preventDefault()
-    setSubmitting(true)
-    setError(null)
-    setOk(false)
-
-    try {
-      const form = new FormData()
-      form.append("team_name", teamName)
-      form.append("team_size", String(teamSize))
-      form.append("members", JSON.stringify(members))
-      form.append("transaction_id", transactionId)
-      form.append("event_title", event.title)
-      if (file) form.append("payment_proof", file)
-
-      const res = await fetch(`/api/events/${event.slug}/register`, {
-        method: "POST",
-        body: form,
-      })
-
-      if (!res.ok) {
-        const j = await res.json().catch(() => ({}))
-        throw new Error(j?.error || `Request failed with ${res.status}`)
-      }
-
-      setOk(true)
-      onClose()
-    } catch (err: any) {
-      setError(err?.message || "Something went wrong")
-    } finally {
-      setSubmitting(false)
-    }
+  function submit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    // Your form submission logic here
   }
 
+  if (!open) return null;
+
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby={`${dialogId}-title`}
-      className="fixed inset-0 z-50 grid place-items-center bg-black/50 px-4"
-      onClick={onClose}
-    >
-      <div className="glass w-full max-w-lg rounded-2xl p-6" onClick={(e) => e.stopPropagation()}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+      <div className="glass border-gradient rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto relative">
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-xl font-bold text-gray-500 hover:text-gray-800"
+          aria-label="Close"
+          type="button"
+        >
+          ×
+        </button>
         <h2 id={`${dialogId}-title`} className="font-display text-xl">
           Register for {event.title}
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">
           Team size 2–4. Provide all member details and payment info.
         </p>
-
         {/* Payment QR (if provided via event) */}
         <div className="mt-4">
           <img
@@ -129,7 +97,6 @@ export function RegisterModal({
           />
           <p className="mt-2 text-center text-xs text-muted-foreground">Scan to pay, then upload proof.</p>
         </div>
-
         <form className="mt-4 grid gap-3" onSubmit={submit}>
           <label className="grid gap-1">
             <span className="text-sm">Team name</span>
@@ -156,44 +123,30 @@ export function RegisterModal({
           </label>
 
           <div className="mt-1 grid gap-3">
-            {members.map((m, idx) => (
-              <div key={idx} className="rounded-md border p-3">
-                <div className="mb-2 text-sm font-medium">Member {idx + 1}</div>
-                <div className="grid gap-2 sm:grid-cols-2">
-                  <label className="grid gap-1">
-                    <span className="text-xs">Name</span>
-                    <input
-                      required
-                      value={m.name}
-                      onChange={(e) =>
-                        setMembers((prev) => {
-                          const next = [...prev]
-                          next[idx] = { ...next[idx], name: e.target.value }
-                          return next
-                        })
-                      }
-                      className="rounded-md border bg-background px-3 py-2 outline-none focus:ring-2 focus:ring-[var(--c-primary)]"
-                      placeholder="Full name"
-                    />
-                  </label>
-                  <label className="grid gap-1">
-                    <span className="text-xs">Email</span>
-                    <input
-                      required
-                      type="email"
-                      value={m.email}
-                      onChange={(e) =>
-                        setMembers((prev) => {
-                          const next = [...prev]
-                          next[idx] = { ...next[idx], email: e.target.value }
-                          return next
-                        })
-                      }
-                      className="rounded-md border bg-background px-3 py-2 outline-none focus:ring-2 focus:ring-[var(--c-primary)]"
-                      placeholder="you@example.com"
-                    />
-                  </label>
-                </div>
+            {members.map((member, idx) => (
+              <div key={idx} className="grid grid-cols-2 gap-2">
+                <Input
+                  type="text"
+                  placeholder={`Member ${idx + 1} Name`}
+                  value={member.name}
+                  onChange={e => {
+                    const updated = [...members];
+                    updated[idx].name = e.target.value;
+                    setMembers(updated);
+                  }}
+                  required
+                />
+                <Input
+                  type="email"
+                  placeholder={`Member ${idx + 1} Email`}
+                  value={member.email}
+                  onChange={e => {
+                    const updated = [...members];
+                    updated[idx].email = e.target.value;
+                    setMembers(updated);
+                  }}
+                  required
+                />
               </div>
             ))}
           </div>
