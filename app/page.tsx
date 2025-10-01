@@ -17,18 +17,15 @@ export default function HomePage() {
   const [modalOpen, setModalOpen] = useState(false)
 
   return (
-    <>
-      {/* Fixed Navbar */}
+    <main>
+      {/* Navbar */}
       <SiteNav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-b from-background/50 to-transparent backdrop-blur-md" />
 
       {/* Hero Section */}
       <Hero onRegisterClick={() => setModalOpen(true)} />
 
-      {/* Spacer to push content down on small screens */}
-      <div className="h-40 sm:h-48 md:h-56" />
-
       {/* Content Section */}
-      <section className="mx-auto max-w-6xl px-4 py-16 relative z-10">
+      <section className="mx-auto max-w-6xl px-4 py-16 mt-20 sm:mt-24 md:mt-32">
         <div className="grid gap-6 md:grid-cols-3">
           <div className="glass rounded-2xl p-6">
             <h3 className="font-display text-lg">Events</h3>
@@ -62,6 +59,6 @@ export default function HomePage() {
           event={eventData}
         />
       )}
-    </>
+    </main>
   )
 }
