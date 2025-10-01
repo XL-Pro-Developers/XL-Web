@@ -1,4 +1,3 @@
-// app/page.tsx
 "use client"
 
 import { useState } from "react"
@@ -6,7 +5,6 @@ import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/footer"
 import { Hero } from "@/components/hero"
 import { RegisterModal } from "@/components/register-modal"
-
 
 const eventData = {
   title: "Codeathon 2.0",
@@ -18,15 +16,15 @@ export default function HomePage() {
   const [modalOpen, setModalOpen] = useState(false)
 
   return (
-    <main>
+    <>
       {/* Navbar */}
-      <SiteNav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-b from-background/50 to-transparent backdrop-blur-md" />
+      <SiteNav />
 
       {/* Hero Section */}
       <Hero onRegisterClick={() => setModalOpen(true)} />
 
       {/* Content Section */}
-      <section className="mx-auto max-w-6xl px-4 py-16 mt-20 sm:mt-24 md:mt-32">
+      <section className="mx-auto max-w-6xl px-4 py-16">
         <div className="grid gap-6 md:grid-cols-3">
           <div className="glass rounded-2xl p-6">
             <h3 className="font-display text-lg">Events</h3>
@@ -60,6 +58,6 @@ export default function HomePage() {
           event={eventData}
         />
       )}
-    </main>
+    </>
   )
 }
