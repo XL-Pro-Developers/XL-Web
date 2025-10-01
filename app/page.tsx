@@ -1,9 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { SiteNav } from "@/components/site-nav"
-import { SiteFooter } from "@/components/footer"
 import { Hero } from "@/components/hero"
+import { SiteFooter } from "@/components/footer"
 import { RegisterModal } from "@/components/register-modal"
 
 const eventData = {
@@ -14,14 +14,30 @@ const eventData = {
 
 export default function HomePage() {
   const [modalOpen, setModalOpen] = useState(false)
+  const [navbarHeight, setNavbarHeight] = useState(0)
+  const navRef = useRef<HTMLElement>(null)
+
+  // Measure navbar height dynamically
+  useEffect(() => {
+    if (navRef.current) {
+      setNavbarHeight(navRef.current.offsetHeight)
+    }
+    const handleResize = () => {
+      if (navRef.current) setNavbarHeight(navRef.current.offsetHeight)
+    }
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
 
   return (
     <>
       {/* Navbar */}
-      <SiteNav />
+      <SiteNav ref={navRef} />
 
-      {/* Hero Section */}
-      <Hero onRegisterClick={() => setModalOpen(true)} />
+      {/* Hero section with dynamic negative margin */}
+      <div style={{ marginTop: -navbarHeight }}>
+        <Hero onRegisterClick={() => setModalOpen(true)} />
+      </div>
 
       {/* Content Section */}
       <section className="mx-auto max-w-6xl px-4 py-16">

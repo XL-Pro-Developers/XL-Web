@@ -1,8 +1,8 @@
 "use client"
 
 import { useEffect, useId, useState } from "react"
+import { createPortal } from "react-dom"
 import type React from "react"
-
 import { GlowButton } from "./glow-button"
 import type { EventData } from "./event-card"
 import { Input } from "./ui/input"
@@ -33,7 +33,7 @@ export function RegisterModal({ open, onClose, event }: RegisterModalProps) {
     return () => window.removeEventListener("keydown", handleEsc)
   }, [open, onClose])
 
-  // Disable background scroll when modal is open
+  // Disable background scroll
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : ""
     return () => { document.body.style.overflow = "" }
@@ -56,14 +56,14 @@ export function RegisterModal({ open, onClose, event }: RegisterModalProps) {
     setSubmitting(true)
     setError(null)
     // TODO: Add your submission logic here
-    setTimeout(() => setSubmitting(false), 1000) // example
+    setTimeout(() => setSubmitting(false), 1000)
   }
 
   if (!open) return null
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="glass border-gradient rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto relative">
+  return createPortal(
+    <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50">
+      <div className="glass border-gradient rounded-2xl p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto relative z-[1001]">
         {/* Close button */}
         <button
           onClick={onClose}
@@ -74,6 +74,7 @@ export function RegisterModal({ open, onClose, event }: RegisterModalProps) {
           ×
         </button>
 
+        {/* Modal header */}
         <h2 id={`${dialogId}-title`} className="font-display text-xl">
           Register for {event.title}
         </h2>
@@ -93,7 +94,9 @@ export function RegisterModal({ open, onClose, event }: RegisterModalProps) {
           </p>
         </div>
 
+        {/* Form */}
         <form className="mt-4 grid gap-3" onSubmit={handleSubmit}>
+          {/* Team Name */}
           <label className="grid gap-1">
             <span className="text-sm">Team name</span>
             <input
@@ -105,6 +108,7 @@ export function RegisterModal({ open, onClose, event }: RegisterModalProps) {
             />
           </label>
 
+          {/* Team Size */}
           <label className="grid gap-1">
             <span className="text-sm">Team size</span>
             <select
@@ -150,7 +154,7 @@ export function RegisterModal({ open, onClose, event }: RegisterModalProps) {
             ))}
           </div>
 
-          {/* Transaction & File */}
+          {/* Transaction ID */}
           <label className="grid gap-1">
             <span className="text-sm">Transaction ID</span>
             <input
@@ -162,6 +166,7 @@ export function RegisterModal({ open, onClose, event }: RegisterModalProps) {
             />
           </label>
 
+          {/* Payment proof file */}
           <label className="grid gap-1">
             <span className="text-sm">Payment proof (image/pdf)</span>
             <input
@@ -175,6 +180,7 @@ export function RegisterModal({ open, onClose, event }: RegisterModalProps) {
 
           {error && <p className="text-sm text-red-500">{error}</p>}
 
+          {/* Buttons */}
           <div className="mt-2 flex items-center gap-2">
             <GlowButton type="submit" disabled={submitting}>
               {submitting ? "Submitting..." : "Submit"}
@@ -185,6 +191,7 @@ export function RegisterModal({ open, onClose, event }: RegisterModalProps) {
           </div>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
