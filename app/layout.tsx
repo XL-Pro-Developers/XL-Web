@@ -5,8 +5,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
 import "./globals.css"
 import "./theme.css"
-import { HeroMatrix } from "@/components/hero-matrix"
-import SplashCursor from "@/components/SplashCursor"
+import { BackgroundEffects } from "@/components/BackgroundEffects"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -34,8 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`dark ${inter.variable} ${spaceGrotesk.variable} antialiased`}>
       <body className="font-sans">
-        <SplashCursor />
-        <HeroMatrix className="fixed inset-0 -z-10 h-full w-full opacity-20 pointer-events-none" />
+        <BackgroundEffects />
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
       </body>

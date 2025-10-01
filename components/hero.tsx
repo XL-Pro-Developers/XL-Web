@@ -7,6 +7,7 @@ import { RegisterModal } from "./register-modal"
 import Hero3D from "./hero-3d"
 import Prism from "./Prism"
 import Ballpit from "./Ballpit.jsx"
+import { useIsMobile } from "./ui/use-mobile"
 
 const eventData = {
   title: "Codeathon 2.0",
@@ -17,14 +18,15 @@ const eventData = {
 
 export function Hero() {
   const [modalOpen, setModalOpen] = useState(false)
+  const isMobile = useIsMobile()
 
   return (
     <section className="hero-bg relative overflow-hidden min-h-screen">
       {/* 3D animation as background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <Prism />
+        {!isMobile && <Prism />}
       </div>
-      <Hero3D />
+      {!isMobile && <Hero3D />}
 
       {/* <div className="absolute inset-0 z-0 pointer-events-none">
         <Ballpit
@@ -60,7 +62,7 @@ export function Hero() {
               {/* Animated event video */}
               <video
                 src="https://uomobeznhbvlzengqqxl.supabase.co/storage/v1/object/public/website%20stuff/WhatsApp%20Video%202025-09-30%20at%2019.14.20_3485c314.mp4"
-                autoPlay
+                autoPlay={!isMobile}
                 loop
                 muted
                 playsInline
