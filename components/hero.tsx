@@ -1,44 +1,32 @@
+// components/hero.tsx
 "use client"
 
-import Link from "next/link"
 import { useState } from "react"
-import { GlowButton } from "./glow-button"
-import { RegisterModal } from "./register-modal"
 import Hero3D from "./hero-3d"
 import Prism from "./Prism"
-import Ballpit from "./Ballpit.jsx"
+import { HeroMatrix } from "./hero-matrix"
+import SplashCursor from "./SplashCursor"
 import { useIsMobile } from "./ui/use-mobile"
+import { GlowButton } from "./glow-button"
 
-const eventData = {
-  title: "Codeathon 2.0",
-  slug: "codeathon-2-0",
-  qrCodeUrl: "", // Add QR code URL if available
-  // ...add other fields as needed for RegisterModal
-}
-
-export function Hero() {
-  const [modalOpen, setModalOpen] = useState(false)
+export function Hero({ onRegisterClick }: { onRegisterClick: () => void }) {
   const isMobile = useIsMobile()
 
   return (
-    <section className="hero-bg relative overflow-hidden min-h-screen">
-      {/* 3D animation as background */}
+    <section className="hero-bg relative w-full h-screen overflow-hidden">
+      {/* Background Effects */}
       <div className="absolute inset-0 z-0 pointer-events-none">
+        <HeroMatrix className="h-full w-full opacity-80" />
         {!isMobile && <Prism />}
       </div>
+
+      {/* 3D Effects & Cursor */}
       {!isMobile && <Hero3D />}
+      {!isMobile && <SplashCursor />}
 
-      {/* <div className="absolute inset-0 z-0 pointer-events-none">
-        <Ballpit
-          count={200}
-          gravity={0.7}
-          friction={0.8}
-          wallBounce={0.95}
-          followCursor={true}
-        />
-      </div> */}
-
-      <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 gap-8 px-4 pt-20 pb-16 md:grid-cols-2 md:pt-24 md:pb-24">
+      {/* Hero Content */}
+      <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 gap-8 px-4 h-full items-center md:grid-cols-2">
+        {/* Text */}
         <div className="flex flex-col justify-center gap-6">
           <h1 className="font-display text-pretty text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">
             Build. Learn. Ship.
@@ -46,46 +34,38 @@ export function Hero() {
             Join the XL Pro Developer Community
           </h1>
           <p className="text-pretty text-base text-muted-foreground md:text-lg">
-            A futuristic, minimal community for developers. Events, projects, chat, and more—designed for speed and
-            clarity.
+            A futuristic, minimal community for developers. Events, projects, chat, and more—designed for speed and clarity.
           </p>
-          <div className="flex items-center gap-3">
-            {/* Explore Events and Meet Members buttons removed */}
-          </div>
-          {/* <p className="text-xs text-muted-foreground">
-            Tip: We respect reduced motion. Heavy animations are toned down automatically.
-          </p> */}
         </div>
-        <div className="relative min-h-[350px] md:min-h-[450px] h-[350px] md:h-[450px]">
-          <div className="glass rounded-2xl p-6 border-gradient">
+
+        {/* Event Video Card */}
+        <div className="relative min-h-[350px] md:min-h-[450px] h-[350px] md:h-[450px] flex items-center justify-center">
+          <div className="glass rounded-2xl p-6 border-gradient w-full">
             <div className="mt-4 space-y-2">
-              {/* Animated event video */}
               <video
                 src="https://uomobeznhbvlzengqqxl.supabase.co/storage/v1/object/public/website%20stuff/WhatsApp%20Video%202025-09-30%20at%2019.14.20_3485c314.mp4"
-                autoPlay={!isMobile}
-                loop
+                autoPlay
                 muted
                 playsInline
-                className="w-full rounded-lg mb-2 object-cover aspect-video animate-pulse"
+                className="w-full rounded-lg mb-2 object-cover aspect-video"
                 poster="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80"
+                onEnded={(e) => {
+                  const video = e.currentTarget
+                  video.pause()
+                  video.currentTime = video.duration
+                }}
               />
               <h3 className="font-display text-lg">Codeathon 2.0</h3>
               <p className="text-sm text-muted-foreground">
                 Join us for a weekend of coding, collaboration, and fun! Open to all skill levels.
               </p>
-              <GlowButton className="mt-2 w-full" onClick={() => setModalOpen(true)}>
+              <GlowButton className="mt-2 w-full" onClick={onRegisterClick}>
                 Register Now
               </GlowButton>
             </div>
           </div>
         </div>
       </div>
-      {/* Register Modal */}
-      <RegisterModal
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        event={eventData}
-      />
     </section>
   )
 }

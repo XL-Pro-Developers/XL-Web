@@ -9,8 +9,22 @@ export function BackgroundEffects() {
 
   return (
     <>
-      <SplashCursor />
-      {!isMobile && <HeroMatrix className="fixed inset-0 -z-10 h-full w-full opacity-20 pointer-events-none" />}
+      {/* Desktop: show both */}
+      {!isMobile && (
+        <>
+          <SplashCursor />
+          <HeroMatrix
+            className="fixed inset-0 -z-10 h-full w-full opacity-20 pointer-events-none"
+          />
+        </>
+      )}
+
+      {/* Mobile: show only HeroMatrix */}
+      {isMobile && (
+        <HeroMatrix
+          className="fixed inset-0 -z-10 h-full w-full opacity-20 pointer-events-none"
+        />
+      )}
     </>
   )
 }
