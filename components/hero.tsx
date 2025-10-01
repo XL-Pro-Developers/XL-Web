@@ -1,32 +1,43 @@
-// components/hero.tsx
 "use client"
 
-import { useState } from "react"
-import Hero3D from "./hero-3d"
-import Prism from "./Prism"
-import { HeroMatrix } from "./hero-matrix"
-import SplashCursor from "./SplashCursor"
-import { useIsMobile } from "./ui/use-mobile"
+import { useState, useEffect, useRef } from "react"
+import dynamic from "next/dynamic"
 import { GlowButton } from "./glow-button"
+import { HeroMatrix } from "./hero-matrix"
+
+const Prism = dynamic(() => import("./Prism"), { ssr: false })
+const Hero3D = dynamic(() => import("./hero-3d"), { ssr: false })
+const SplashCursor = dynamic(() => import("./SplashCursor"), { ssr: false })
 
 export function Hero({ onRegisterClick }: { onRegisterClick: () => void }) {
-  const isMobile = useIsMobile()
+  const [isDesktop, setIsDesktop] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  // Desktop check
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth >= 768)
+    check()
+    window.addEventListener("resize", check)
+    return () => window.removeEventListener("resize", check)
+  }, [])
 
   return (
     <section className="hero-bg relative w-full h-screen overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
+      {/* Background Container */}
+      <div
+        ref={containerRef}
+        className="absolute inset-0 z-0 pointer-events-none w-full h-full"
+      >
         <HeroMatrix className="h-full w-full opacity-80" />
-        {!isMobile && <Prism />}
+        {isDesktop && <Prism />}
       </div>
 
       {/* 3D Effects & Cursor */}
-      {!isMobile && <Hero3D />}
-      {!isMobile && <SplashCursor />}
+      {isDesktop && <Hero3D />}
+      {isDesktop && <SplashCursor />}
 
       {/* Hero Content */}
       <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-1 gap-8 px-4 h-full items-center md:grid-cols-2">
-        {/* Text */}
         <div className="flex flex-col justify-center gap-6">
           <h1 className="font-display text-pretty text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">
             Build. Learn. Ship.
@@ -38,7 +49,6 @@ export function Hero({ onRegisterClick }: { onRegisterClick: () => void }) {
           </p>
         </div>
 
-        {/* Event Video Card */}
         <div className="relative min-h-[350px] md:min-h-[450px] h-[350px] md:h-[450px] flex items-center justify-center">
           <div className="glass rounded-2xl p-6 border-gradient w-full">
             <div className="mt-4 space-y-2">

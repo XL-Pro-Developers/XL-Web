@@ -1,4 +1,4 @@
-// app/page.tsx (HomePage)
+// app/page.tsx
 "use client"
 
 import { useState } from "react"
@@ -18,14 +18,16 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Fixed Navbar */}
-      <SiteNav className="fixed top-0 left-0 w-full z-50" />
+      {/* Fixed Navbar with semi-transparent background */}
+      <SiteNav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-b from-background/50 to-transparent backdrop-blur-md" />
+
+
 
       {/* Hero Section */}
       <Hero onRegisterClick={() => setModalOpen(true)} />
 
       {/* Content Section */}
-      <section className="mx-auto max-w-6xl px-4 py-16 relative z-0">
+      <section className="mx-auto max-w-6xl px-4 py-16 relative z-10">
         <div className="grid gap-6 md:grid-cols-3">
           <div className="glass rounded-2xl p-6">
             <h3 className="font-display text-lg">Events</h3>
@@ -50,7 +52,7 @@ export default function HomePage() {
 
       <SiteFooter />
 
-      {/* Modal rendered at top-level to avoid overlap */}
+      {/* Register Modal */}
       {modalOpen && (
         <RegisterModal open={modalOpen} onClose={() => setModalOpen(false)} event={eventData} />
       )}
