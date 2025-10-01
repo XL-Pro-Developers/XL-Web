@@ -6,6 +6,7 @@ import { GlowButton } from "./glow-button"
 import { HeroMatrix } from "./hero-matrix"
 import { RegisterModal } from "./register-modal"
 
+
 const Prism = dynamic(() => import("./Prism"), { ssr: false })
 const Hero3D = dynamic(() => import("./hero-3d"), { ssr: false })
 const SplashCursor = dynamic(() => import("./SplashCursor"), { ssr: false })
@@ -34,13 +35,13 @@ export function Hero() {
       {/* Background */}
       <div ref={containerRef} className="absolute inset-0 z-0 pointer-events-none w-full h-full">
         <HeroMatrix className="h-full w-full opacity-80" />
-        {isDesktop && <Prism />}
+        {/* {isDesktop && <Prism />} */}
       </div>
 
       {/* 3D Effects & Cursor */}
       {isDesktop && <Hero3D />}
-      {isDesktop && <SplashCursor />}
-
+      {/* {isDesktop && <SplashCursor />} */}
+      
       {/* Hero Content */}
       <div className="relative z-10 mx-auto max-w-6xl px-4 py-20 sm:py-24 md:py-32 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         {/* Text */}

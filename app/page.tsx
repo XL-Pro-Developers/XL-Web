@@ -7,6 +7,7 @@ import { SiteFooter } from "@/components/footer"
 import { Hero } from "@/components/hero"
 import { RegisterModal } from "@/components/register-modal"
 
+
 const eventData = {
   title: "Codeathon 2.0",
   slug: "codeathon-2-0",

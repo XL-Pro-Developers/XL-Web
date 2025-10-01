@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`dark ${inter.variable} ${spaceGrotesk.variable} antialiased`}>
       <body className="font-sans">
-        <BackgroundEffects />
+        {/* <BackgroundEffects /> */}
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
       </body>
