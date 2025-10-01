@@ -5,7 +5,7 @@ import dynamic from "next/dynamic"
 import { GlowButton } from "./glow-button"
 import { HeroMatrix } from "./hero-matrix"
 import { RegisterModal } from "./register-modal"
-
+import ElectricBorder from "./ElectricBorder"
 
 const Prism = dynamic(() => import("./Prism"), { ssr: false })
 const Hero3D = dynamic(() => import("./hero-3d"), { ssr: false })
@@ -56,28 +56,36 @@ export function Hero() {
           </p>
         </div>
 
-        {/* Codeathon Box */}
+        {/* Codeathon Box with ElectricBorder */}
         <div className="relative min-h-[350px] md:min-h-[450px] flex items-center justify-center">
-          <div className="glass rounded-2xl p-6 border-gradient w-full">
-            <div className="space-y-2">
-              <video
-                src="https://uomobeznhbvlzengqqxl.supabase.co/storage/v1/object/public/website%20stuff/WhatsApp%20Video%202025-09-30%20at%2019.14.20_3485c314.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full rounded-lg mb-2 object-cover aspect-video"
-                poster="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80"
-              />
-              <h3 className="font-display text-lg">Codeathon 2.0</h3>
-              <p className="text-sm text-muted-foreground">
-                Join us for a weekend of coding, collaboration, and fun! Open to all skill levels.
-              </p>
-              <GlowButton className="mt-2 w-full" onClick={() => setModalOpen(true)}>
-                Register Now
-              </GlowButton>
+          <ElectricBorder
+            color="#602decff"
+            speed={1}
+            chaos={0.6}
+            thickness={0.5}
+            style={{ borderRadius: '1rem', width: '100%' }}
+          >
+            <div className="glass rounded-2xl p-6 w-full">
+              <div className="space-y-2">
+                <video
+                  src="https://uomobeznhbvlzengqqxl.supabase.co/storage/v1/object/public/website%20stuff/WhatsApp%20Video%202025-09-30%20at%2019.14.20_3485c314.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full rounded-lg mb-2 object-cover aspect-video"
+                  poster="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80"
+                />
+                <h3 className="font-display text-lg">Codeathon 2.0</h3>
+                <p className="text-sm text-muted-foreground">
+                  Join us for a weekend of coding, collaboration, and fun! Open to all skill levels.
+                </p>
+                <GlowButton className="mt-2 w-full" onClick={() => setModalOpen(true)}>
+                  Register Now
+                </GlowButton>
+              </div>
             </div>
-          </div>
+          </ElectricBorder>
         </div>
       </div>
 
