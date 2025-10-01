@@ -18,13 +18,14 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Fixed Navbar with semi-transparent background */}
+      {/* Fixed Navbar */}
       <SiteNav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-b from-background/50 to-transparent backdrop-blur-md" />
-
-
 
       {/* Hero Section */}
       <Hero onRegisterClick={() => setModalOpen(true)} />
+
+      {/* Spacer to push content down on small screens */}
+      <div className="h-40 sm:h-48 md:h-56" />
 
       {/* Content Section */}
       <section className="mx-auto max-w-6xl px-4 py-16 relative z-10">
@@ -50,11 +51,16 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Footer */}
       <SiteFooter />
 
       {/* Register Modal */}
       {modalOpen && (
-        <RegisterModal open={modalOpen} onClose={() => setModalOpen(false)} event={eventData} />
+        <RegisterModal
+          open={modalOpen}
+          onClose={() => setModalOpen(false)}
+          event={eventData}
+        />
       )}
     </>
   )
