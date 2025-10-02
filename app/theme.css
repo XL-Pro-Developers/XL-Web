@@ -70,6 +70,7 @@
 .hero-bg {
   position: relative;
   isolation: isolate;
+  min-height: 100vh;
   background: radial-gradient(1200px 600px at 10% -10%, rgba(0, 209, 255, 0.12), transparent),
     radial-gradient(1000px 600px at 100% 0%, rgba(122, 90, 248, 0.1), transparent),
     radial-gradient(800px 500px at 50% 110%, rgba(255, 62, 165, 0.08), transparent), var(--c-bg);
