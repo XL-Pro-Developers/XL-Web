@@ -32,7 +32,7 @@ export function Hero() {
 
   return (
          <section
-       className="hero-bg relative w-full -mt-[64px] min-h-screen overflow-hidden">     
+       className="hero-bg relative w-full min-h-screen overflow-hidden">     
        {/* Background */}
        <div ref={containerRef} className="absolute inset-0 z-0 pointer-events-none w-full h-full">
          <HeroMatrix className="h-full w-full opacity-80" />
