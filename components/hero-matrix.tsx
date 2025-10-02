@@ -12,11 +12,6 @@ export function HeroMatrix({ className = "" }: { className?: string }) {
     const ctx = canvas.getContext("2d")
     if (!ctx) return
 
-    const prefersReduced =
-      typeof window !== "undefined" &&
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-
     // Resize handling
     let width = (canvas.width = canvas.offsetWidth || window.innerWidth)
     let height = (canvas.height = canvas.offsetHeight || 500)
@@ -24,67 +19,66 @@ export function HeroMatrix({ className = "" }: { className?: string }) {
     const onResize = () => {
       width = canvas.width = canvas.offsetWidth || window.innerWidth
       height = canvas.height = canvas.offsetHeight || 500
-      // Recompute columns
-      columns = Math.floor(width / fontSize)
-      drops = Array(columns).fill(1)
+      drawBackground()
     }
     const ro = new ResizeObserver(onResize)
     ro.observe(canvas)
 
-    // Matrix rain setup
-    const characters =
-      "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズヅブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロゴゾドボポ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    const chars = characters.split("")
-    const fontSize = 14
-    let columns = Math.floor(width / fontSize)
-    let drops = Array(columns).fill(1)
-
-    // Colors via design tokens: primary neon for glyphs, subtle dark backdrop
-    const glyphColor = getComputedStyle(document.documentElement).getPropertyValue("--c-accent") || "#00FFC2"
-    const fadeBg = "rgba(0,0,0,0.12)" // subtler trail and lower visibility
-
-    let raf = 0
-    const draw = () => {
+    const drawBackground = () => {
       if (!ctx) return
-      // fade effect
-      ctx.fillStyle = fadeBg
+
+      // Clear canvas
+      ctx.clearRect(0, 0, width, height)
+
+      // Create subtle gradient background
+      const gradient = ctx.createLinearGradient(0, 0, width, height)
+      gradient.addColorStop(0, 'rgba(0, 0, 0, 0.02)')
+      gradient.addColorStop(0.5, 'rgba(0, 0, 0, 0.01)')
+      gradient.addColorStop(1, 'rgba(0, 0, 0, 0.02)')
+      ctx.fillStyle = gradient
       ctx.fillRect(0, 0, width, height)
 
-      ctx.fillStyle = glyphColor.trim() || "#00FFC2"
-      ctx.font = `${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`
+      // Add subtle grid pattern
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.03)'
+      ctx.lineWidth = 1
 
-      for (let i = 0; i < drops.length; i++) {
-        const text = chars[Math.floor(Math.random() * chars.length)]
-        const x = i * fontSize
-        const y = drops[i] * fontSize
-        ctx.fillText(text, x, y)
-
-        if (y > height && Math.random() > 0.975) drops[i] = 0
-        drops[i]++
+      const gridSize = 60
+      for (let x = 0; x < width; x += gridSize) {
+        ctx.beginPath()
+        ctx.moveTo(x, 0)
+        ctx.lineTo(x, height)
+        ctx.stroke()
       }
-      raf = requestAnimationFrame(draw)
+      for (let y = 0; y < height; y += gridSize) {
+        ctx.beginPath()
+        ctx.moveTo(0, y)
+        ctx.lineTo(width, y)
+        ctx.stroke()
+      }
+
+      // Add subtle accent circles
+      const accentColor = getComputedStyle(document.documentElement)
+        .getPropertyValue("--color-primary") || "rgba(0, 100, 255, 0.05)"
+      
+      ctx.fillStyle = accentColor
+      ctx.globalAlpha = 0.05
+      
+      // Top right circle
+      ctx.beginPath()
+      ctx.arc(width * 0.8, height * 0.2, 150, 0, Math.PI * 2)
+      ctx.fill()
+      
+      // Bottom left circle
+      ctx.beginPath()
+      ctx.arc(width * 0.2, height * 0.8, 180, 0, Math.PI * 2)
+      ctx.fill()
+      
+      ctx.globalAlpha = 1
     }
 
-    if (!prefersReduced) {
-      // Prime a darker base so trails look nice
-      ctx.fillStyle = "rgba(0,0,0,0.25)"
-      ctx.fillRect(0, 0, width, height)
-      raf = requestAnimationFrame(draw)
-    } else {
-      // Static subtle background for reduced motion
-      ctx.fillStyle = "rgba(0,0,0,0.12)"
-      ctx.fillRect(0, 0, width, height)
-      ctx.fillStyle = glyphColor.trim() || "#00FFC2"
-      ctx.font = `${fontSize}px ui-monospace, monospace`
-      for (let i = 0; i < columns; i++) {
-        const x = i * fontSize
-        const y = (i % 3) * fontSize * 3 + 80
-        ctx.fillText(chars[(i * 7) % chars.length], x, y)
-      }
-    }
+    drawBackground()
 
     return () => {
-      cancelAnimationFrame(raf)
       ro.disconnect()
     }
   }, [])

@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`dark ${inter.variable} ${spaceGrotesk.variable} antialiased`}>
       <body className="font-sans">
-        <HeroMatrix className="fixed inset-0 -z-10 h-full w-full opacity-20 pointer-events-none" />
+        <HeroMatrix className="fixed inset-0 z-0 h-full w-full opacity-20 pointer-events-none" />
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
       </body>

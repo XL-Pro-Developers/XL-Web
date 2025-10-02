@@ -17,7 +17,7 @@ export function SiteNav() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border bg-background/80 backdrop-blur">
+    <header className="sticky top-0 z-30 w-full border-b border-border bg-background/80 backdrop-blur">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         <Link href="/" className="flex items-center gap-2" aria-label="XL Pro Developer Community Home">
           <div aria-hidden className="h-6 w-6 rounded-md bg-[var(--c-primary)] glow-primary" />
