@@ -29,6 +29,11 @@ export default function HomePage() {
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 
+  // Scroll to top when the page loads
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" })
+  }, [])
+
   return (
     <>
       {/* Navbar */}

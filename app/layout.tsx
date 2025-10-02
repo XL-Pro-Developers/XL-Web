@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Inter, Space_Grotesk } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
+import Script from "next/script"
 import "./globals.css"
 import "./theme.css"
 import { BackgroundEffects } from "@/components/BackgroundEffects"
@@ -27,13 +28,21 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`dark ${inter.variable} ${spaceGrotesk.variable} antialiased`}>
-      <body className="font-sans">
+    <html
+      lang="en"
+      className={`dark ${inter.variable} ${spaceGrotesk.variable} antialiased`}
+    >
+      <body className="font-sans min-h-screen flex flex-col">
+        {/* Optional background effects */}
         {/* <BackgroundEffects /> */}
+
+        {/* Force scroll to top on page load */}
+        <Script id="scrollTop" strategy="beforeInteractive">
+          {`window.scrollTo(0,0);`}
+        </Script>
+
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
       </body>
