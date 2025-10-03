@@ -8,9 +8,9 @@ export const SiteNav = forwardRef<HTMLElement>((props, ref) => {
   return (
     <header
       ref={ref}
-      className="sticky top-0 z-50 w-full bg-transparent"
+      className="top-0 z-50 w-full bg-transparent"
     >
-      <nav className="flex justify-center items-center py-2 px-4 md:px-6">
+      <nav className="flex items-center py-4 px-6 md:px-7 ">
         <Link
           href="/"
           className="flex items-center gap-2"
@@ -19,9 +19,9 @@ export const SiteNav = forwardRef<HTMLElement>((props, ref) => {
           <Image
             src="/xllogo.svg"
             alt="XL Pro Logo"
-            width={100}
-            height={300}
-            className="glow-primary"
+            width={125}
+            height={250}
+            className="glow-primary glass border-gradient rounded-2xl p-1 "
           />
         </Link>
       </nav>

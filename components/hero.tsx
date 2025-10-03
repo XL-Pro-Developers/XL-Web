@@ -47,7 +47,7 @@ export function Hero({ onRegisterClick }: { onRegisterClick?: () => void }) {
       {isDesktop && <SplashCursor />} */}
 
       {/* Hero Content */}
-      <div className="relative z-10 mx-auto max-w-6xl px-4 py-20 sm:py-24 md:py-32 grid grid-cols-1 md:grid-cols-2 gap-8 items-center flex-1">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 py-20 sm:py-24 md:py-0 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         {/* Text */}
         <div className="flex flex-col justify-center gap-6">
           <h1 className="font-display text-pretty text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
@@ -63,14 +63,14 @@ export function Hero({ onRegisterClick }: { onRegisterClick?: () => void }) {
 
         {/* Codeathon Box */}
         <div className="relative min-h-[350px] md:min-h-[450px] flex items-center justify-center">
-          <ElectricBorder
+          {/* <ElectricBorder
             color="#602decff"
             speed={1}
             chaos={0.2}
             thickness={0.5}
             style={{ borderRadius: "1rem", width: "100%" }}
-          >
-            <div className="glass rounded-2xl p-6 w-full">
+          > */}
+            <div className="glass rounded-2xl p-6 w-full glass border-gradient">
               <div className="space-y-2">
                 <video
                   src="https://uomobeznhbvlzengqqxl.supabase.co/storage/v1/object/public/website%20stuff/WhatsApp%20Video%202025-09-30%20at%2019.14.20_3485c314.mp4"
@@ -97,7 +97,7 @@ export function Hero({ onRegisterClick }: { onRegisterClick?: () => void }) {
                 </GlowButton>
               </div>
             </div>
-          </ElectricBorder>
+          {/* </ElectricBorder> */}
         </div>
       </div>
 
